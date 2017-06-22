@@ -13,6 +13,6 @@ import javax.jws.WebService;
 public interface DecodingServiceEndpointInterface { 
     @WebMethod(operationName="decodingOperation")
     @WebResult(name = "successedDecoding")     
-    Boolean checkMessage(@WebParam(name="decodedText") String decodedText, @WebParam(name="fileName") String fileName, @WebParam(name="keyVal") String keyVal) ;
+    void checkMessage(@WebParam(name="decodedText") String decodedText, @WebParam(name="fileName") String fileName, @WebParam(name="keyVal") String keyVal) ;
 }
 
