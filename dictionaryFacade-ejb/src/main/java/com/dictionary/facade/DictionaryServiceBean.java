@@ -22,9 +22,10 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
     private DictionaryDAO dictionaryDAO;
     
     @Override
-    public void addWord(String wordName) {
+    public Boolean addWord(String wordName) {
         Word word = new Word();
         word.setName(wordName);
-        dictionaryDAO.insert(word);
+        
+        return dictionaryDAO.insert(word);
     }
 }

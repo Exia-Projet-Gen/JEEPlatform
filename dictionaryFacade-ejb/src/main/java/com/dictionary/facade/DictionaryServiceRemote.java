@@ -14,5 +14,5 @@ import javax.ejb.Remote;
 
 @Remote
 public interface DictionaryServiceRemote {
-    void addWord(String word);
+    Boolean addWord(String word);
 }

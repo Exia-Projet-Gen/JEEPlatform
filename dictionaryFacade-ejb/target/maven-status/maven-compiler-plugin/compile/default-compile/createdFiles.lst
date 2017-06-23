@@ -1,5 +1,0 @@
-com\dictionary\integration\DictionaryDAO.class
-com\dictionary\domain\Word_.class
-com\dictionary\facade\DictionaryServiceBean.class
-com\dictionary\domain\Word.class
-com\dictionary\facade\DictionaryServiceRemote.class

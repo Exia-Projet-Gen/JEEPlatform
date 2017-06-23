@@ -20,7 +20,16 @@ public class DictionaryDAO {
     @PersistenceContext(unitName = "dictionaryAppPU")
     private EntityManager em;
     
-    public void insert(Word word){
-        em.persist(word);
+    public Boolean insert(Word word){
+        try {
+            if (word != null) {
+                em.persist(word);
+                return true;
+            }
+            return false;       
+        }catch (Exception e) {
+            return false;
+        }
     }
+     
 }

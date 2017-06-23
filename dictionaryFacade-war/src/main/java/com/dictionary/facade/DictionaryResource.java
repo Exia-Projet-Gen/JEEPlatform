@@ -50,8 +50,14 @@ public class DictionaryResource {
             wordName = wordInfo.getString("name");
         }
         
-        dictionaryService.addWord(wordName);
+        Boolean isValid = dictionaryService.addWord(wordName);
         
-        return Response.accepted().build();
+        Response resp = null;
+        if (isValid) {
+            resp = Response.accepted().build();
+        } else {
+            resp = Response.status(400).entity("n° CB invalide").build();
+        }
+        return resp;
     }   
 }
