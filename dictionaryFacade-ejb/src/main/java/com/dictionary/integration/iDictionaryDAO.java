@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dictionary.facade;
+package com.dictionary.integration;
 
 import com.dictionary.domain.Word;
 import java.util.List;
-import javax.ejb.Remote;
 
 /**
  *
  * @author hyaci
  */
-
-@Remote
-public interface DictionaryServiceRemote {
-    Boolean addWord(String word);
-    List<Word> searchWord(String wordName);
-    List<Word> getWords();
+public interface iDictionaryDAO {
+    List<Word> findByName(final String wordName);
+    List<Word> getAll();
+    Boolean update(final Word word);
+    Boolean create(final Word word);
+    Boolean delete(final Word word);   
 }
