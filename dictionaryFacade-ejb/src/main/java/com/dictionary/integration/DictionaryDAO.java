@@ -10,9 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import jdk.nashorn.internal.objects.NativeArray;
 
 /**
  *
@@ -28,17 +26,15 @@ public class DictionaryDAO implements iDictionaryDAO {
     public List<Word> findByName(String wordName) {
          try {
             if (wordName != null && !wordName.isEmpty()) {
-                System.out.println(wordName);
-                TypedQuery <Word> query = em.createQuery("SELECT w FROM Word w WHERE w.mot LIKE :pattern", Word.class);
-                query.setParameter("pattern", "'%" + wordName + "%'");
-                List<Word> words = query.getResultList() ;
-                            
+                List<Word> words = em.createQuery("SELECT w FROM Word w WHERE w.name LIKE :pattern")
+                    .setParameter("pattern", "%" + wordName + "%")
+                    .getResultList();
+  
                 return words ;
             }
         } catch(Exception e) {
             return null;
         }
-        System.out.println("failed");
         return null;
     }
 
@@ -51,15 +47,21 @@ public class DictionaryDAO implements iDictionaryDAO {
             return words ;
         } catch (Exception e) {
             
-            System.out.println("tata ");
             return null;
         }
     }
 
     @Override
     public Boolean update(Word word) {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (word != null) {
+                em.merge(word);
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }    
+        return false;
     }
 
     @Override
@@ -76,8 +78,18 @@ public class DictionaryDAO implements iDictionaryDAO {
     }
 
     @Override
-    public Boolean delete(Word word) {
-        //TODO implement this method
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Boolean delete(Long id) {
+        try {
+            if (id != null) {
+                Word word = em.find(Word.class, id);
+                if (word != null) {
+                    em.remove(word);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }   
 }

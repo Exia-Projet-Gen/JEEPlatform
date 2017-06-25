@@ -17,6 +17,8 @@ import javax.ejb.Remote;
 @Remote
 public interface DictionaryServiceRemote {
     Boolean addWord(String word);
+    Boolean updateWord(Long id, String wordValue);
+    Boolean deleteWord(Long id);
     List<Word> searchWord(String wordName);
     List<Word> getWords();
 }

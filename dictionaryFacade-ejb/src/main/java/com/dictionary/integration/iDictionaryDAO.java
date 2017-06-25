@@ -17,5 +17,5 @@ public interface iDictionaryDAO {
     List<Word> getAll();
     Boolean update(final Word word);
     Boolean create(final Word word);
-    Boolean delete(final Word word);   
+    Boolean delete(final Long id);   
 }

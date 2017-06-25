@@ -28,6 +28,10 @@ public class Word implements Serializable {
     @Column(name="mot")
     private String name;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
