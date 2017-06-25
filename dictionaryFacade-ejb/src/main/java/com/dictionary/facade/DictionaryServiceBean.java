@@ -5,9 +5,11 @@
  */
 package com.dictionary.facade;
 
+import com.dictionary.domain.JAXWord;
 import com.dictionary.domain.Word;
 import com.dictionary.integration.DictionaryDAO;
 import com.dictionary.integration.iDictionaryDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -33,7 +35,7 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
 
     @Override
     public Boolean updateWord(Long id, String wordValue) {
-        final Word word = new Word();
+        Word word = new Word();
         word.setId(id);
         word.setName(wordValue);
         return dictionaryDAO.update(word);
@@ -45,14 +47,38 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
     }
     
     @Override
-    public List<Word> searchWord(String wordName) {
-        return dictionaryDAO.findByName(wordName);
+    public List<JAXWord> searchWord(String wordName) {
+        
+        List<Word> words = dictionaryDAO.findByName(wordName);
+        List<JAXWord> transformedWords = new ArrayList<>();
+        words.forEach((word) -> {
+            transformedWords.add(transformWordToJsonObject(word));
+        });
+        
+        return transformedWords;
     }
     
     
     @Override
-    public List<Word> getWords() {
+    public List<JAXWord> getWords() {
         List<Word> words = dictionaryDAO.getAll();
-        return words;
+        List<JAXWord> transformedWords = new ArrayList<>();
+        words.forEach((word) -> {
+            
+            transformedWords.add(transformWordToJsonObject(word));
+        });
+        
+        return transformedWords;
+    }
+    
+    public JAXWord transformWordToJsonObject(Word word) {       
+        try {
+            JAXWord transformedWord = new JAXWord();
+            transformedWord.setId(word.getId());
+            transformedWord.setName(word.getName());
+            return transformedWord;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.dictionary.facade;
 
+import com.dictionary.domain.JAXWord;
 import com.dictionary.domain.Word;
 import java.io.StringReader;
 import java.util.List;
@@ -37,16 +38,16 @@ public class DictionaryResource {
     @EJB(lookup = "java:global/dictionaryFacade-ejb/DictionaryServiceBean")
     private DictionaryServiceRemote dictionaryService;
     
-    @Path("{word}")
+    @Path("search/{word}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("word") String wordName) {
-        List<Word> matchingWords = dictionaryService.searchWord(wordName);
+        List<JAXWord> matchingWords = dictionaryService.searchWord(wordName);
         
         System.out.println(matchingWords);
         
         if (matchingWords != null) {
-            GenericEntity<List<Word>> genericList = new GenericEntity<List<Word>>(matchingWords){};
+            GenericEntity<List<JAXWord>> genericList = new GenericEntity<List<JAXWord>>(matchingWords){};
             Response resp = Response.ok(genericList).build();
             return resp;
         }
@@ -57,8 +58,8 @@ public class DictionaryResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        List<Word> words = dictionaryService.getWords();
-        GenericEntity<List<Word>> genericList = new GenericEntity<List<Word>>(words){};
+        List<JAXWord> words = dictionaryService.getWords();
+        GenericEntity<List<JAXWord>> genericList = new GenericEntity<List<JAXWord>>(words){};
   
         System.out.println("empty " + words.isEmpty());
         for(int i = 0; i < words.size(); i++) {
