@@ -29,12 +29,14 @@ public class DecodingProcessor implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
+            //on extrait le paiment du corps du message. - getBody est une méthode JMS 2.0
             String decodingMessage = message.getBody(String.class);
             
-            System.out.println("le message est " + decodingMessage);
+            System.out.println("Le message est " + decodingMessage);
         } catch (JMSException ex) {
             Logger.getLogger(DecodingProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
     
 }

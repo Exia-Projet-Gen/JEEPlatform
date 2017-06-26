@@ -6,6 +6,7 @@
 package com.dictionary.facade;
 
 import com.dictionary.domain.JAXWord;
+import com.dictionary.domain.Word;
 import java.io.StringReader;
 import java.util.List;
 import javax.ejb.EJB;
@@ -58,7 +59,7 @@ public class DictionaryResource {
     public Response sendFile(@PathParam("value") String value) {
         Boolean isValid = dictionaryService.sendDecodedText(value);
          
-        Response resp = null;
+        Response resp;
         if (isValid) {
             resp = Response.accepted().header("Access-Control-Allow-Origin", "*").build();
         } else {
@@ -80,7 +81,7 @@ public class DictionaryResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(String content) {
-        
+                
         StringReader reader = new StringReader(content);
         String wordName;
         try (JsonReader jreader = Json.createReader(reader)) {
@@ -88,13 +89,17 @@ public class DictionaryResource {
             wordName = wordInfo.getString("name");
         }
         
-        Boolean isValid = dictionaryService.addWord(wordName);
+        JAXWord addedWord = dictionaryService.addWord(wordName);
         
         Response resp = null;
-        if (isValid) {
-            resp = Response.accepted().header("Access-Control-Allow-Origin", "*").build();
+        if (addedWord != null) {
+            resp = Response.ok(addedWord).build();
         } else {
-            resp = Response.status(400).entity("A problem occured while adding the word in database.").header("Access-Control-Allow-Origin", "*").build();
+            resp = Response.status(400).entity("A problem occured while adding the word in database.")
+                    .header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Methods", "POST, GET")
+                    .allow("OPTIONS")
+                    .build();
         }
         return resp;
     }   

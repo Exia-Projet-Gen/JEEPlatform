@@ -16,6 +16,6 @@ public interface iDictionaryDAO {
     List<Word> findByName(final String wordName);
     List<Word> getAll();
     Boolean update(final Word word);
-    Boolean create(final Word word);
+    Word create(final Word word);
     Boolean delete(final Long id);   
 }

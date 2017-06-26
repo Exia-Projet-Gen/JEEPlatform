@@ -65,15 +65,16 @@ public class DictionaryDAO implements iDictionaryDAO {
     }
 
     @Override
-    public Boolean create(Word word) {
+    public Word create(Word word) {
         try {
             if (word != null) {
                 em.persist(word);
-                return true;
+                em.flush();
+                return word;
             }
-            return false;       
+            return null;       
         }catch (Exception e) {
-            return false;
+            return null;
         }
     }
 

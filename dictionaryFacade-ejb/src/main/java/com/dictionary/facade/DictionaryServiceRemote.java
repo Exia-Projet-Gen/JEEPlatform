@@ -6,7 +6,6 @@
 package com.dictionary.facade;
 
 import com.dictionary.domain.JAXWord;
-import com.dictionary.domain.Word;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -17,7 +16,7 @@ import javax.ejb.Remote;
 
 @Remote
 public interface DictionaryServiceRemote {
-    Boolean addWord(String word);
+    JAXWord addWord(String word);
     Boolean updateWord(Long id, String wordValue);
     Boolean deleteWord(Long id);
     List<JAXWord> searchWord(String wordName);

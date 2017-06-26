@@ -41,11 +41,14 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
     private Queue decodingQueue;
           
     @Override
-    public Boolean addWord(String wordName) {
+    public JAXWord addWord(String wordName) {
         Word word = new Word();
         word.setName(wordName);
         
-        return dictionaryDAO.create(word);
+        Word addedWord = dictionaryDAO.create(word);
+        JAXWord jaxAddedWord = transformWordToJsonObject(addedWord);
+        
+        return jaxAddedWord;
     }
 
     @Override
@@ -79,7 +82,6 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
         List<Word> words = dictionaryDAO.getAll();
         List<JAXWord> transformedWords = new ArrayList<>();
         words.forEach((word) -> {
-            
             transformedWords.add(transformWordToJsonObject(word));
         });
         
