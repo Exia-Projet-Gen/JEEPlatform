@@ -43,15 +43,13 @@ public class DictionaryResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@PathParam("word") String wordName) {
         List<JAXWord> matchingWords = dictionaryService.searchWord(wordName);
-        
-        System.out.println(matchingWords);
-        
+                
         if (matchingWords != null) {
             GenericEntity<List<JAXWord>> genericList = new GenericEntity<List<JAXWord>>(matchingWords){};
-            Response resp = Response.ok(genericList).build();
+            Response resp = Response.ok(genericList).header("Access-Control-Allow-Origin", "*").build();
             return resp;
         }
-        Response failedResp = Response.serverError().build();
+        Response failedResp = Response.serverError().header("Access-Control-Allow-Origin", "*").build();
         return failedResp;
     }  
     
@@ -60,13 +58,8 @@ public class DictionaryResource {
     public Response getAll() {
         List<JAXWord> words = dictionaryService.getWords();
         GenericEntity<List<JAXWord>> genericList = new GenericEntity<List<JAXWord>>(words){};
-  
-        System.out.println("empty " + words.isEmpty());
-        for(int i = 0; i < words.size(); i++) {
-            System.out.println(words.get(i).getName());
-        }
         
-        Response resp = Response.ok(genericList).build();
+        Response resp = Response.ok(genericList).header("Access-Control-Allow-Origin", "*").build();
         return resp;
     } 
     
@@ -85,9 +78,9 @@ public class DictionaryResource {
         
         Response resp = null;
         if (isValid) {
-            resp = Response.accepted().build();
+            resp = Response.accepted().header("Access-Control-Allow-Origin", "*").build();
         } else {
-            resp = Response.status(400).entity("A problem occured while adding the word in database.").build();
+            resp = Response.status(400).entity("A problem occured while adding the word in database.").header("Access-Control-Allow-Origin", "*").build();
         }
         return resp;
     }   
@@ -109,9 +102,9 @@ public class DictionaryResource {
         
         Response resp = null;
         if (isValid) {
-            resp = Response.accepted().build();
+            resp = Response.accepted().header("Access-Control-Allow-Origin", "*").build();
         } else {
-            resp = Response.status(400).entity("A problem occured while updating the word in database.").build();
+            resp = Response.status(400).entity("A problem occured while updating the word in database.").header("Access-Control-Allow-Origin", "*").build();
         }
         return resp;
     }   
@@ -125,7 +118,7 @@ public class DictionaryResource {
         if (isValid) {
             resp = Response.accepted().build();
         } else {
-            resp = Response.status(400).entity("A problem occured while deleting the word in database.").build();
+            resp = Response.status(400).entity("A problem occured while deleting the word in database.").header("Access-Control-Allow-Origin", "*").build();
         }
         return resp;
     }  
