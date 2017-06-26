@@ -114,7 +114,7 @@ public class DictionaryResource {
         try (JsonReader jreader = Json.createReader(reader)) {
             JsonObject wordInfo = jreader.readObject();
             id = wordInfo.getJsonNumber("id").longValue();
-            wordValue = wordInfo.getString("value");
+            wordValue = wordInfo.getString("name");
         }
         
         Boolean isValid = dictionaryService.updateWord(id, wordValue);
