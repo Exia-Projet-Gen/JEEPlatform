@@ -6,7 +6,6 @@
 package com.dictionary.facade;
 
 import com.dictionary.domain.JAXWord;
-import com.dictionary.domain.Word;
 import java.io.StringReader;
 import java.util.List;
 import javax.ejb.EJB;
@@ -51,6 +50,21 @@ public class DictionaryResource {
         }
         Response failedResp = Response.serverError().header("Access-Control-Allow-Origin", "*").build();
         return failedResp;
+    }  
+    
+    @Path("decode/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sendFile(@PathParam("value") String value) {
+        Boolean isValid = dictionaryService.sendDecodedText(value);
+         
+        Response resp = null;
+        if (isValid) {
+            resp = Response.accepted().header("Access-Control-Allow-Origin", "*").build();
+        } else {
+            resp = Response.status(400).entity("A problem occured while deleting the word in database.").header("Access-Control-Allow-Origin", "*").build();
+        }
+        return resp;
     }  
     
     @GET

@@ -31,12 +31,7 @@ public class DecodingProcessor implements MessageListener {
         try {
             String decodingMessage = message.getBody(String.class);
             
-            for (int i = 0; i<=40; i++) {
-                System.out.println("[Traitement long d'integration dans le processus bancaire de]");
-                System.out.println(decodingMessage);
-            }
-            
-            System.out.println("l'ordre de paiement " + decodingMessage + "va être retiré de la queue");
+            System.out.println("le message est " + decodingMessage);
         } catch (JMSException ex) {
             Logger.getLogger(DecodingProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -22,4 +22,5 @@ public interface DictionaryServiceRemote {
     Boolean deleteWord(Long id);
     List<JAXWord> searchWord(String wordName);
     List<JAXWord> getWords();
+    Boolean sendDecodedText(String decodedText);
 }
