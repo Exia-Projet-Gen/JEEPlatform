@@ -5,15 +5,12 @@
  */
 package com.decoding.facade;
 
-import javax.ejb.Remote;
-import javax.jws.WebService;
+import com.decoding.domain.Message;
 
 /**
  *
  * @author hyaci
  */
-
-@Remote
-public interface DecodingInterfaceRemote {
-    Boolean checkMessage(String decodedText, String fileName, String keyVal);
+public interface iDecoding {
+    Message checkMessage(Message message);
 }

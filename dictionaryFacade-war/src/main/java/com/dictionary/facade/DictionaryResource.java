@@ -6,7 +6,6 @@
 package com.dictionary.facade;
 
 import com.dictionary.domain.JAXWord;
-import com.dictionary.domain.Word;
 import java.io.StringReader;
 import java.util.List;
 import javax.ejb.EJB;
@@ -54,7 +53,7 @@ public class DictionaryResource {
     }  
     
     @Path("decode/{value}")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response sendFile(@PathParam("value") String value) {
         Boolean isValid = dictionaryService.sendDecodedText(value);
@@ -80,8 +79,7 @@ public class DictionaryResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(String content) {
-                
+    public Response add(String content) {          
         StringReader reader = new StringReader(content);
         String wordName;
         try (JsonReader jreader = Json.createReader(reader)) {

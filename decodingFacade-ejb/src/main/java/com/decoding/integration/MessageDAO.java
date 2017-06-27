@@ -9,6 +9,6 @@ package com.decoding.integration;
  *
  * @author hyaci
  */
-public class DictionaryDAO {
+public class MessageDAO {
     
 }
