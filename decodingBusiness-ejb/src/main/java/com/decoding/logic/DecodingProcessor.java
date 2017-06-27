@@ -32,7 +32,7 @@ public class DecodingProcessor implements MessageListener {
         
             //on extrait le paiment du corps du message. - getBody est une méthode JMS 2.0
             String decodingMessage = message.getBody(String.class);
-            System.out.println("l'ordre de paiement "+decodingMessage+" va être retiré de la queue");
+            System.out.println("Message : "+decodingMessage);
 
         } catch (JMSException ex) {
             Logger.getLogger(DecodingProcessor.class.getName()).log(Level.SEVERE, null, ex);

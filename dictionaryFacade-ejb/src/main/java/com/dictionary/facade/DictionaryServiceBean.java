@@ -100,12 +100,13 @@ public class DictionaryServiceBean implements DictionaryServiceRemote {
     }
     
     @Override
-    public Boolean sendDecodedText(String decodedText) {
+    public Boolean sendDecodedText(String decodedText, String keyValue, String fileName) {
+        
         try {            
             JAXDecodedText decodedObject = new JAXDecodedText();
             
-            decodedObject.setKey("keyvalue");
-            decodedObject.setFileName("keyvalue");
+            decodedObject.setKey(keyValue);
+            decodedObject.setFileName(fileName);
             decodedObject.setDecodedText(decodedText);
                     
             sendMessage(decodedObject);

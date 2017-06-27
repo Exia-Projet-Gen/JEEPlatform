@@ -52,12 +52,23 @@ public class DictionaryResource {
         return failedResp;
     }  
     
-    @Path("decode/{value}")
+    @Path("decode")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sendFile(@PathParam("value") String value) {
-        Boolean isValid = dictionaryService.sendDecodedText(value);
-         
+    public Response sendFile(String content) {
+        StringReader reader = new StringReader(content);
+        String decodedText;
+        String keyValue;
+        String fileName;
+        try (JsonReader jreader = Json.createReader(reader)) {
+            JsonObject fileToDecode = jreader.readObject();
+            decodedText = fileToDecode.getString("decodedText");
+            keyValue = fileToDecode.getString("keyValue");
+            fileName = fileToDecode.getString("fileName");
+        }
+        
+        Boolean isValid = dictionaryService.sendDecodedText(decodedText, keyValue, fileName);
+                
         Response resp;
         if (isValid) {
             resp = Response.accepted().build();
@@ -79,7 +90,8 @@ public class DictionaryResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(String content) {          
+    public Response add(String content) {
+                
         StringReader reader = new StringReader(content);
         String wordName;
         try (JsonReader jreader = Json.createReader(reader)) {
